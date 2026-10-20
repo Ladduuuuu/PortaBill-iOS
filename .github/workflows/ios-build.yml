@@ -6,14 +6,16 @@ workflow_dispatch:
 jobs:
 build:
 runs-on: macos-15
-
 steps:
-  - name: Checkout source
-    uses: actions/checkout@v4
+- name: Checkout source
+uses: actions/checkout@v4
+
   - name: Install XcodeGen
     run: brew install xcodegen
   - name: Generate Xcode project
     run: xcodegen generate
+  - name: List available schemes
+    run: xcodebuild -list
   - name: Build iOS app
     run: |
       xcodebuild \
