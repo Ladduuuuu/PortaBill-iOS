@@ -1,6 +1,5 @@
 name: Build PortaBill iOS
-
-on:
+‘on’:
 workflow_dispatch:
 
 jobs:
@@ -16,22 +15,3 @@ uses: actions/checkout@v4
     run: xcodegen generate
   - name: List available schemes
     run: xcodebuild -list
-  - name: Build iOS app
-    run: |
-      xcodebuild \
-        -scheme PortaBill \
-        -sdk iphoneos \
-        -configuration Release \
-        -derivedDataPath build \
-        CODE_SIGNING_ALLOWED=NO \
-        build
-  - name: Package app
-    run: |
-      mkdir -p Payload
-      cp -R build/Build/Products/Release-iphoneos/*.app Payload/
-      zip -r PortaBill-iOS-unsigned.ipa Payload
-  - name: Upload build artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: PortaBill-iOS-unsigned
-      path: PortaBill-iOS-unsigned.ipa
